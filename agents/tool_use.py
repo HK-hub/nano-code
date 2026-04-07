@@ -1,22 +1,18 @@
 #!/usr/bin/env python3
 """
-s01_agent_loop.py - The Agent Loop
-The entire secret of an AI coding agent in one pattern:
-    while stop_reason == "tool_use":
-        response = LLM(messages, tools)
-        execute tools
-        append results
-    +----------+      +-------+      +---------+
-    |   User   | ---> |  LLM  | ---> |  Tool   |
-    |  prompt  |      |       |      | execute |
-    +----------+      +---+---+      +----+----+
-                          ^               |
-                          |   tool_result |
-                          +---------------+
-                          (loop continues)
-This is the core loop: feed tool results back to the model
-until the model decides to stop. Production agents layer
-policy, hooks, and lifecycle controls on top.
+s02_tool_use.py - Tools
+The agent loop from s01 didn't change. We just added tools to the array
+and a dispatch map to route calls.
+    +----------+      +-------+      +------------------+
+    |   User   | ---> |  LLM  | ---> | Tool Dispatch    |
+    |  prompt  |      |       |      | {                |
+    +----------+      +---+---+      |   bash: run_bash |
+                          ^          |   read: run_read |
+                          |          |   write: run_wr  |
+                          +----------+   edit: run_edit |
+                          tool_result| }                |
+                                     +------------------+
+Key insight: "The loop didn't change at all. I just added tools."
 """
 
 import os
@@ -46,11 +42,11 @@ if not MODEL:
     raise ValueError(
         "ANTHROPIC_MODEL or MODEL_ID is not set. Please set it in your .env file."
     )
-# 系统提示词
-SYSTEM = f"You are a coding agent at {os.getcwd()}. Use bash to solve tasks. Act, don't explain."
 
 # 工作目录
 WORKDIR = Path.cwd()
+# 系统提示词
+SYSTEM = f"You are a coding agent at {WORKDIR}. Use tools to solve tasks. Act, don't explain."
 
 # 工具列表
 TOOL_HANDLERS = {
@@ -69,22 +65,14 @@ TOOLS = [
     {"name": "write_file", "description": "Write content to file.",
      "input_schema": {"type": "object", "properties": {"path": {"type": "string"}, "content": {"type": "string"}}, "required": ["path", "content"]}},
     {"name": "edit_file", "description": "Replace exact text in file.",
-     "input_schema": {"type": "object", "properties": {"path": {"type": "string"}, "old_text": {"type": "string"}, "new_text": {"type": "string"}}, "required": ["path", "old_text", "new_text"]}},
+     "input_schema": {"type": "object", "properties": {"path": {"type": "string"}, "old_text": {"type": "string"}, "new_text": {"type": "string"}}, "required": ["path", "old_text", "new_text"]}}
 ]
-
 
 def safe_path(p: str) -> Path:
     path = (WORKDIR / p).resolve()
     if not path.is_relative_to(WORKDIR):
         raise ValueError(f"Path escapes workspace: {p}")
     return path
-
-def run_read(path: str, limit: int = None) -> str:
-    text = safe_path(path).read_text()
-    lines = text.splitlines()
-    if limit and limit < len(lines):
-        lines = lines[:limit]
-    return "\n".join(lines)[:50000]
 
 
 # 运行 bash 命令
