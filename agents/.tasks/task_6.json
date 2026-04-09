@@ -1,0 +1,11 @@
+{
+  "id": 6,
+  "subject": "Emit - Generate output files and artifacts",
+  "description": "Emit the transformed code into target files. Generate new source files, update configurations, and produce final artifacts.",
+  "status": "pending",
+  "blockedBy": [
+    4
+  ],
+  "blocks": [],
+  "owner": []
+}

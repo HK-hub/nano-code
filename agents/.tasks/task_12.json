@@ -1,0 +1,12 @@
+{
+  "id": 12,
+  "subject": "Deploy - Configure deployment and infrastructure",
+  "description": "Create Dockerfile and docker-compose, setup CI/CD pipeline config, configure environment variables for production, add health check endpoints, create deployment scripts.",
+  "status": "pending",
+  "blockedBy": [
+    10,
+    11
+  ],
+  "blocks": [],
+  "owner": []
+}

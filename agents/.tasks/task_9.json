@@ -1,0 +1,11 @@
+{
+  "id": 9,
+  "subject": "Database - Design schema and setup database connection",
+  "description": "Design user and auth tables (users, sessions, tokens), setup database connection pool, create migrations, implement connection health checks.",
+  "status": "pending",
+  "blockedBy": [
+    8
+  ],
+  "blocks": [],
+  "owner": []
+}

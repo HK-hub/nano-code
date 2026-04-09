@@ -1,0 +1,12 @@
+{
+  "id": 10,
+  "subject": "Auth - Implement user authentication system",
+  "description": "Build registration endpoint, login endpoint, password hashing (bcrypt/argon2), JWT/session token generation, middleware for protected routes, logout functionality.",
+  "status": "pending",
+  "blockedBy": [
+    8,
+    9
+  ],
+  "blocks": [],
+  "owner": []
+}
