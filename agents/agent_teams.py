@@ -697,7 +697,7 @@ CHILD_TOOLS:list = [
     {"name": "list_teammates", "description": "List all teammates with name, role, status.",
      "input_schema": {"type": "object", "properties": {}}},
     {"name": "send_message", "description": "Send a message to a teammate's inbox.",
-     "input_schema": {"type": "object", "properties": {"to": {"type": "string"}, "content": {"type": "string"}, "msg_type": {"type": "string", "enum": list(VALID_MSG_TYPES)}}, "required": ["to", "content"]}},
+     "input_schema": {"type": "object", "properties": {"to": {"type": "string"}, "content": {"type": "string"}, "msg_type": {"type": "string", "enum": list(VALID_MESSAGE_TYPES)}}, "required": ["to", "content"]}},
     {"name": "read_inbox", "description": "Read and drain the lead's inbox.",
      "input_schema": {"type": "object", "properties": {}}},
     {"name": "broadcast", "description": "Send a message to all teammates.",
