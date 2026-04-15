@@ -1,9 +1,0 @@
-{
-  "id": 8,
-  "subject": "Setup - Initialize project structure and dependencies",
-  "description": "Create project structure, initialize package manager, install core dependencies (framework, database driver, auth libraries), configure TypeScript/ESLint/Prettier, setup environment variables template.",
-  "status": "in_progress",
-  "blockedBy": [],
-  "blocks": [],
-  "owner": []
-}
